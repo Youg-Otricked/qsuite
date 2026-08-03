@@ -1,0 +1,43 @@
+#link<./libcore.a>
+namespace qsuite {
+enum ColorMode {
+    Always = 0;
+    Never = 1;
+}
+namespace Values {
+    class Value<T> {
+        private T value;
+        Value(T value);
+        void toBeTrue();
+        void toBeFalse();
+        void toBe(T other);
+        void toNotBe(T other);
+        void toBeGreaterThan(T other);
+        void toBeLessThan(T other);
+        void toBeAtLeast(T other);
+        void toBeAtMost(T other);
+        void toBeAround(T other, double margin_of_error = 0.01);
+    }
+}
+namespace Test {
+    class Test {
+        Test();
+        Values::Value<T> expect<T>(T value, string message);
+        void logFail(string message);
+        void logPass(string message);
+        void throws(fn() -> void f, string message);
+        void doesntThrow(fn() -> void f, string message);
+    }
+}
+namespace Suite {
+    struct Settings {
+        ColorMode color_mode;
+        double max_ms;
+    }
+    class Suite {
+        double max_ms;
+        Suite(Settings settings);
+        void operator( )(fn(Test::Test) -> void t, string descriptor);
+    }
+}
+}

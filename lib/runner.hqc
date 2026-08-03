@@ -1,0 +1,7 @@
+#link<./librunner.a>
+#nomain
+namespace qsuite {
+namespace Runner {
+    int runTests();
+}
+}
