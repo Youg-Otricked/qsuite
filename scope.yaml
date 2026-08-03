@@ -1,0 +1,12 @@
+commands:
+  build: qc main.qc -o qsuite
+  run: qc main.qc -o qsuite && ./qsuite
+  test: null
+dependencies: {}
+project:
+  author: QuantumC-Official
+  description: A Testing Library for the QuantumC programming language
+  name: qsuite
+  qc_version: x0.24.1
+  repo: null
+  version: 1.0.0
