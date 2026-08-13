@@ -26,74 +26,74 @@ namespace Values {
     class Value<T> {
         private T value;
         Value(T value) {
-            this.value = value;
+            this->value = value;
         }
         void toBeTrue() {
-            return this.value == true;
+            return this->value == true;
         }
         void toBeFalse() {
-            return this.value == false;
+            return this->value == false;
         }
         void toBe(T other) {
-            if (this.value == other) {
+            if (this->value == other) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
                 fails++;
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
             }
         }
         void toNotBe(T other) {
-            if (this.value != other) {
+            if (this->value != other) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
                 fails++;
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
             }
         }
         void toBeGreaterThan(T other) {
-            if (this.value > other) {
+            if (this->value > other) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
                 fails++;
             }
         }
         void toBeLessThan(T other) {
-            if (this.value < other) {
+            if (this->value < other) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
                 fails++;
             }
         }
         void toBeAtLeast(T other) {
-            if (this.value >= other) {
+            if (this->value >= other) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
                 fails++;
             }
         }
         void toBeAtMost(T other) {
-            if (this.value <= other) {
+            if (this->value <= other) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
                 fails++;
             }
         }
         void toBeAround(T other, double margin_of_error = 0.01) {
-            if (this.value >= other - margin_of_error && this.value <= other + margin_of_error) {
+            if (this->value >= other - margin_of_error && this->value <= other + margin_of_error) {
                 passes++;
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } else {
-                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this.value, color(RESET));
+                `qout("%s%s        FAIL: Expected %a to be %a%s\n", color(RESET), color(RED), other, this->value, color(RESET));
                 fails++;
             }
         }
@@ -118,20 +118,20 @@ namespace Test {
         void throws(fn() -> void f, string message) {
             try {
                 f();
-                this.logFail(message);
+                this->logFail(message);
                 `qout("%s%s        FAIL%s\n", color(RESET), color(RED), color(RESET));
             } catch(...) {
-                this.logPass(message);
+                this->logPass(message);
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             }
         }
         void doesntThrow(fn() -> void f, string message) {
             try {
                 f();
-                this.logPass(message);
+                this->logPass(message);
                 `qout("%s%s        PASS%s\n", color(RESET), color(GREEN), color(RESET));
             } catch(...) {
-                this.logFail(message);
+                this->logFail(message);
                 `qout("%s%s        FAIL%s\n", color(RESET), color(RED), color(RESET));
             }
         }
@@ -148,7 +148,7 @@ namespace Suite {
             passes = 0;
             fails = 0;
             color_mode = settings.color_mode;
-            this.max_ms = settings.max_ms;
+            this->max_ms = settings.max_ms;
         }
         void operator( )(fn(Test::Test) -> void t, string descriptor) {
             timespec start = timespec{};
@@ -162,8 +162,8 @@ namespace Suite {
             `qout("    %i passed\n", passes);
             `qout("    %i failed\n", fails);
             `qout("    Elapsed time: %d ms\n", elapsed_ms);
-            if (elapsed_ms > this.max_ms) {
-                `qout("%sWARNING: Elapsed time was %d milliseconds over the maximum.%s\n", color(YELLOW), elapsed_ms - this.max_ms, color(RESET));
+            if (elapsed_ms > this->max_ms) {
+                `qout("%sWARNING: Elapsed time was %d milliseconds over the maximum.%s\n", color(YELLOW), elapsed_ms - this->max_ms, color(RESET));
             }
             `qout("Overall: %s%s\n", `ternary(fails > 0, "FAIL", "PASS"), color(RESET));
         }
