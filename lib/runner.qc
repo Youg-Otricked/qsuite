@@ -52,7 +52,7 @@ namespace Runner {
             if (result < 0) throw "Could not read directory " + path;
             long int offset = 0;
             while (offset < result) {
-                char *entry = &buffer[0] + offset;
+                char *entry = (&(buffer[0])) + offset;
                 void *v = entry + 16;
                 short int *record = v;
                 short int recordLength = *record;

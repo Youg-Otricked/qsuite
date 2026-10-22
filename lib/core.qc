@@ -15,8 +15,8 @@ const string GREEN  = "\033[32m";
 const string YELLOW = "\033[33m";
 const string CYAN   = "\033[36m";
 enum ColorMode {
-    Always = 0;
-    Never = 1;
+    Always;
+    Never;
 }
 ColorMode color_mode;
 string color(string ansi) {
