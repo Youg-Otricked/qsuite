@@ -44,12 +44,12 @@ namespace Runner {
     Vector::Vec<string> scanDirectories(string path) {
         Vector::Vec<string> files = [string, 0];
         int dirFd = openat(path);
-        if (dirFd < 0) throw "No " + path + " directory found in current directory";
+        if (dirFd < 0) panic "No " + path + " directory found in current directory";
         char[32768] buffer = [char, 32768];
         while (true) {
             long int result = getdents64(dirFd, buffer, 32768);
             if (result == 0) break;
-            if (result < 0) throw "Could not read directory " + path;
+            if (result < 0)  panic "Could not read directory " + path;
             long int offset = 0;
             while (offset < result) {
                 char *entry = (&(buffer[0])) + offset;
@@ -58,7 +58,7 @@ namespace Runner {
                 short int recordLength = *record;
                 byte typ = *(entry + 18);
                 char *name = entry + 19;
-                if (recordLength < 20 || offset + recordLength > result) throw "Malformed directory entry in " + path;
+                if (recordLength < 20 || offset + recordLength > result)  panic "Malformed directory entry in " + path;
                 if (typ == 8 && `endswith(name, ".test.qc")) {
                     files.push(path + "/" + name);
                 } else if (name != "." && name != ".."  &&  typ == 4) {
