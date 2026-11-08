@@ -9,17 +9,17 @@ int clock_gettime(int clock_id, timespec *tp);
 namespace qsuite {
 addr_t passes;
 addr_t fails;
-const string RESET  = "\033[0m";
-const string RED    = "\033[31m";
-const string GREEN  = "\033[32m";
-const string YELLOW = "\033[33m";
-const string CYAN   = "\033[36m";
+const char *RESET  = "\033[0m";
+const char *RED    = "\033[31m";
+const char *GREEN  = "\033[32m";
+const char *YELLOW = "\033[33m";
+const char *CYAN   = "\033[36m";
 enum ColorMode {
     Always;
     Never;
 }
 ColorMode color_mode;
-string color(string ansi) {
+char *color(char *ansi) {
     return `ternary(color_mode == ColorMode.Always, ansi, "");
 }
 namespace Values {
@@ -115,15 +115,15 @@ namespace Test {
     class Test {
         Test() {
         }
-        Values::Value<T> expect<T>(T value, string message) {
+        Values::Value<T> expect<T>(T value, char *message) {
             `qout("%s%s    %s%s\n", color(RESET), color(CYAN), message, color(RESET));
             return Values::Value<T>(value);
         }
-        void logFail(string message) {
+        void logFail(char *message) {
             `qout("%s%s    %s%s\n", color(RESET), color(CYAN), message, color(RESET));
             fails++;
         }
-        void logPass(string message) {
+        void logPass(char *message) {
             `qout("%s%s    %s%s\n", color(RESET), color(CYAN), message, color(RESET));
             passes++;
         }
@@ -142,7 +142,7 @@ namespace Suite {
             color_mode = settings.color_mode;
             this->max_ms = settings.max_ms;
         }
-        void operator( )(fn(Test::Test) -> void t, string descriptor) {
+        void operator( )(fn(Test::Test) -> void t, char *descriptor) {
             timespec start = timespec{};
             timespec end = timespec{};
             `qout("%s\n", descriptor);
