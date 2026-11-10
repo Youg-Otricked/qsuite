@@ -1,6 +1,6 @@
 #nomain
 namespace Exported {
-    #include<Vector, std>
+    #include<Vector, IO, std>
 }
 foreign:
 char **environ;
@@ -77,7 +77,7 @@ namespace Runner {
         Vector::Vec<string> files = scanDirectories("tests");
         bool failed = false;
         foreach (string file in files) {
-            `qout("Running test %s\n", file);
+            IO::qout("Running test %s\n", file);
             int compilerPid = 0;
             char *compilerArgv[3] = [
                 "qc",
@@ -93,14 +93,14 @@ namespace Runner {
                 environ
             );
             if (spawnError != 0) {
-                `qout("Failed to start compiler\n");
+                IO::qout("Failed to start compiler\n");
                 failed = true;
                 continue;
             }
             int compilerStatus = 0;
             int waitedPid = waitpid(compilerPid, &compilerStatus, 0);
             if (waitedPid < 0 || (compilerStatus & 0x7F) != 0 || ((compilerStatus |> 8) & 0xFF) != 0) {
-                `qout("Failed to compile test\n");
+                IO::qout("Failed to compile test\n");
                 failed = true;
                 continue;
             }
@@ -118,14 +118,14 @@ namespace Runner {
                 environ
             );
             if (spawnError != 0) {
-                `qout("Failed to start test\n");
+                IO::qout("Failed to start test\n");
                 failed = true;
                 continue;
             }
             int testStatus = 0;
             waitedPid = waitpid(testPid, &testStatus, 0);
             if (waitedPid < 0 || (testStatus & 0x7F) != 0 || ((testStatus |> 8) & 0xFF) != 0) {
-                `qout("Test failed\n");
+                IO::qout("Test failed\n");
                 failed = true;
             }
         }
