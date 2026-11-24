@@ -1,6 +1,7 @@
 #nomain
 namespace Exported {
-    #include<Vector, IO, std>
+    #include<Vector, std/collections/vector.hqc>
+    #include<IO, std/io.hqc>
 }
 foreign:
 char **environ;

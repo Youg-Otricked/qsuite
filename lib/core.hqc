@@ -1,6 +1,6 @@
 #nomain
 namespace Exported {
-    #include <IO, std>
+    #include <IO, std/io.hqc>
 }
 struct timespec {
     long int tv_sec;
